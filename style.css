@@ -1,0 +1,11 @@
+#container{
+    margin: 0 auto;
+    height: 600px;
+    width: 600px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+#restartButton{
+    float: right;
+}
