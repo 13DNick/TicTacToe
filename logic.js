@@ -50,7 +50,6 @@ const gameBoardObject = {
     gameBoardArray : []
 };
 
-
 //IFFE (instantly executes)
 (() => {
 
@@ -59,6 +58,7 @@ const gameBoardObject = {
         //create divs, buttons, and tiles and add to container
         for(i = 0; i < 9; i++){
             let div = document.createElement("div");
+            div.classList.add("tileDiv");
             div.id = i;
 
             let button = document.createElement("button");
@@ -91,14 +91,10 @@ const gameBoardObject = {
     
 })();
 
-
-
-//copy array without reference
-let array = JSON.parse(JSON.stringify(gameBoardObject.gameBoardArray));
 const tileClicked = (buttonID) => {
     roundCount++;
 
-    if(array[buttonID].returnMarker() == ""){
+    if(gameBoardObject.gameBoardArray[buttonID].returnMarker() == ""){
         let div = document.getElementById(buttonID);
         let marker = "";
 
@@ -110,22 +106,25 @@ const tileClicked = (buttonID) => {
             marker = "X";
         }
 
-        array[buttonID].placeMarker(marker);
+        gameBoardObject.gameBoardArray[buttonID].placeMarker(marker);
     }
 }
 
-
 const restartGame = () => {
-    array = JSON.parse(JSON.stringify(gameBoardObject.gameBoardArray));
-    roundCount = 0;
+    //clear tiles
+    const tileDivs = document.querySelectorAll(".tileDiv");
+    tileDivs.forEach(tile => tile.style.backgroundImage = "");
 
-    for(i = 0; i < array.length; i++){
-        console.log(array[i].returnMarker());
-    }
+    roundCount = 0;
+    
+    //remove markers from tile object
+    for(i = 0; i < gameBoardObject.gameBoardArray.length; i++){
+        gameBoardObject.gameBoardArray[i].clearTile();
+    } 
 }
 
 
 //TODO
-//finish retart game button
+//finish retart game button -- DONE
 //game logic to see who wins the game
 //fix X's and O's
